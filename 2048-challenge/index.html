@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>2048 Challenge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ====================================================
+             ECRÃ 1: MENU INICIAL
+        ==================================================== -->
+        <section id="tela-menu" class="tela-menu">
+            <div class="menu-card">
+
+                <div class="logo-jogo">
+                    <span class="logo-icon">🔢</span>
+                    <h1>2048 <span class="destaque">Challenge</span></h1>
+                </div>
+                <p class="subtitulo">Merge the numbers and reach the target of each level.</p>
+
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Level</h2>
+                    <div class="grelha-niveis" id="grelha-niveis"></div>
+                </div>
+
+                <button id="btn-comecar" class="btn-principal">Start Game</button>
+
+                <div class="painel-estatisticas">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏆</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-pontuacao" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Best Score</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🔥</span>
+                        <div class="stat-card-info">
+                            <span id="stat-maior-peca" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Highest Tile</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">✅</span>
+                        <div class="stat-card-info">
+                            <span id="stat-vitorias" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Wins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🎮</span>
+                        <div class="stat-card-info">
+                            <span id="stat-partidas" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Games Played</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-ver-historico" class="btn-secundario btn-stats-link">Ver Histórico de Games Played</button>
+
+                <div class="botoes-topo">
+                    <button id="btn-tema-menu" class="btn-som" aria-label="Toggle light/dark theme">
+                        <span id="icon-tema-menu">🌙</span>
+                    </button>
+                    <button id="btn-som-menu" class="btn-som btn-som-segundo" aria-label="Turn sound on or off">
+                        <span id="icon-som-menu">🔊</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 2: HISTÓRICO
+        ==================================================== -->
+        <section id="tela-historico" class="tela-historico escondido">
+            <div class="menu-card">
+                <button id="btn-fechar-historico" class="btn-icon btn-fechar-stats" aria-label="Close history">✕</button>
+                <h2 class="titulo-painel">Histórico de Games Played</h2>
+                <div id="lista-historico" class="lista-historico"></div>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 3: JOGO
+        ==================================================== -->
+        <section id="tela-jogo" class="tela-jogo escondido">
+
+            <header class="jogo-header">
+                <button id="btn-voltar-menu" class="btn-icon" aria-label="Back to menu"><span>←</span></button>
+
+                <div class="stats-jogo">
+                    <div class="stat-item">
+                        <span class="stat-label">Score</span>
+                        <span id="valor-pontuacao" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Best</span>
+                        <span id="valor-melhor-pontuacao" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Moves</span>
+                        <span id="valor-movimentos" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Level</span>
+                        <span id="valor-nivel" class="stat-valor">1</span>
+                    </div>
+                </div>
+
+                <div class="jogo-controlos">
+                    <button id="btn-pausa" class="btn-icon" aria-label="Pause game"><span>⏸</span></button>
+                    <button id="btn-tema-jogo" class="btn-icon" aria-label="Toggle theme"><span id="icon-tema-jogo">🌙</span></button>
+                    <button id="btn-novo-jogo" class="btn-icon" aria-label="New game"><span>⟳</span></button>
+                    <button id="btn-som-jogo" class="btn-icon" aria-label="Turn sound on or off">
+                        <span id="icon-som-jogo">🔊</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Barra de progresso até ao objetivo do nível -->
+            <div class="bloco-objetivo">
+                <span id="texto-objetivo" class="texto-objetivo">Goal: reach 128</span>
+                <div class="barra-objetivo">
+                    <div id="barra-objetivo-preenchimento" class="barra-objetivo-preenchimento"></div>
+                </div>
+            </div>
+
+            <!-- Tabuleiro -->
+            <div class="zona-tabuleiro">
+                <div id="tabuleiro" class="tabuleiro">
+                    <div id="tabuleiro-fundo" class="tabuleiro-fundo"></div>
+                    <div id="camada-pecas" class="camada-pecas"></div>
+
+                    <!-- Overlay de pausa -->
+                    <div id="overlay-pausa" class="overlay-tabuleiro escondido">
+                        <span class="overlay-icon">⏸</span>
+                        <p>Game paused</p>
+                        <button id="btn-continuar-pausa" class="btn-principal">Resume</button>
+                    </div>
+                </div>
+                <p class="dica-controlos">Use the arrow keys or swipe on the screen.</p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ====================================================
+         MODAL DE VITÓRIA DE NÍVEL
+    ==================================================== -->
+    <div id="modal-vitoria" class="modal-overlay escondido">
+        <div class="modal-conteudo">
+            <span class="modal-icon">🎉</span>
+            <h2 id="vitoria-titulo">You reached 128!</h2>
+            <p class="modal-subtitulo">Keep playing or move on to the next level.</p>
+
+            <div class="modal-stats">
+                <div class="modal-stat-item"><span id="vitoria-pontos" class="modal-valor">0</span><span class="modal-label">Points</span></div>
+                <div class="modal-stat-item"><span id="vitoria-movimentos" class="modal-valor">0</span><span class="modal-label">Moves</span></div>
+                <div class="modal-stat-item"><span id="vitoria-tempo" class="modal-valor">00:00</span><span class="modal-label">Time</span></div>
+            </div>
+
+            <div class="modal-botoes">
+                <button id="btn-continuar-jogo" class="btn-secundario">Keep Playing</button>
+                <button id="btn-proximo-nivel-2048" class="btn-principal">Next Level</button>
+                <button id="btn-vitoria-menu" class="btn-secundario">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         MODAL DE FIM DE JOGO (sem movimentos possíveis)
+    ==================================================== -->
+    <div id="modal-fim-jogo" class="modal-overlay escondido">
+        <div class="modal-conteudo">
+            <span class="modal-icon">🧩</span>
+            <h2>Sem Moves Possíveis</h2>
+            <p class="modal-subtitulo">The board is full. Here is your final result.</p>
+
+            <div class="modal-stats">
+                <div class="modal-stat-item"><span id="fim-pontos" class="modal-valor">0</span><span class="modal-label">Points</span></div>
+                <div class="modal-stat-item"><span id="fim-maior-peca" class="modal-valor">0</span><span class="modal-label">Highest Tile</span></div>
+                <div class="modal-stat-item"><span id="fim-tempo" class="modal-valor">00:00</span><span class="modal-label">Time</span></div>
+            </div>
+
+            <div class="modal-botoes">
+                <button id="btn-tentar-novamente" class="btn-principal">Try Again</button>
+                <button id="btn-fim-menu" class="btn-secundario">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camada de partículas para o efeito especial ao chegar ao 2048 -->
+    <div id="camada-particulas" class="camada-particulas"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
