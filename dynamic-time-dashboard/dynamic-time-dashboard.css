@@ -1,0 +1,233 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS
+   Eu defino aqui variáveis de tema que o JavaScript troca consoante a hora.
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: rgba(255, 255, 255, 0.75);
+    --cor-vidro: rgba(255, 255, 255, 0.08);
+    --cor-borda-vidro: rgba(255, 255, 255, 0.25);
+    --gradiente-fundo: linear-gradient(160deg, #0b1026 0%, #05010d 100%);
+    --cor-roxo-neon: #a445fe;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    background: var(--gradiente-fundo);
+    transition: background 1.2s ease;
+    position: relative;
+    color: var(--cor-texto-principal);
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 5;
+}
+
+/* ==========================================================================
+   2. CARTÃO GLASSMORPHISM
+   ========================================================================== */
+
+.dashboard-card {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--cor-vidro);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--cor-borda-vidro);
+    border-radius: 1.4rem;
+    padding: 2.6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    transition: background-color 1.2s ease, border-color 1.2s ease;
+}
+
+.saudacao {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    letter-spacing: 0.5px;
+}
+
+.relogio-bloco { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+
+.relogio {
+    font-size: clamp(2.6rem, 9vw, 4rem);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+    font-variant-numeric: tabular-nums;
+}
+
+.data-completa {
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.info-tema {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--cor-borda-vidro);
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+}
+
+.icone-tema { font-size: 1.2rem; }
+.nome-tema { font-size: 0.82rem; font-weight: 600; }
+
+/* ==========================================================================
+   3. PAINEL DE SIMULAÇÃO
+   ========================================================================== */
+
+.painel-simulacao {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-borda-vidro);
+    border-radius: 1rem;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.6rem;
+}
+
+.painel-simulacao-header { display: flex; align-items: center; justify-content: space-between; }
+
+.titulo-secao {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--cor-texto-secundario);
+}
+
+.badge-modo {
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    background-color: rgba(164, 69, 254, 0.25);
+    color: #d7b3ff;
+}
+
+.badge-modo.manual { background-color: rgba(255, 201, 77, 0.25); color: #ffd873; }
+
+.slider-hora {
+    width: 100%;
+    accent-color: var(--cor-roxo-neon);
+    cursor: pointer;
+}
+
+.slider-marcas {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    color: var(--cor-texto-secundario);
+}
+
+.btn-secundario {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--cor-borda-vidro);
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    font-size: 0.82rem;
+    padding: 0.75rem;
+    border-radius: 0.6rem;
+    transition: all 0.25s ease;
+}
+.btn-secundario:hover { background-color: rgba(255, 255, 255, 0.18); }
+
+/* ==========================================================================
+   4. ELEMENTOS DECORATIVOS: ESTRELAS, SOL E LUA
+   ========================================================================== */
+
+.camada-estrelas {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+.camada-estrelas.visivel { opacity: 1; }
+
+.estrela {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: cintilar 3s ease-in-out infinite;
+}
+
+@keyframes cintilar {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.sol-animado {
+    position: fixed;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff7cc 0%, #ffcf5c 60%, transparent 100%);
+    box-shadow: 0 0 60px 20px rgba(255, 207, 92, 0.5);
+    top: 12%;
+    left: 50%;
+    z-index: 1;
+    opacity: 0;
+    transition: left 1.5s ease, top 1.5s ease, opacity 1.2s ease;
+    pointer-events: none;
+}
+
+.sol-animado.visivel { opacity: 1; }
+
+.lua-animada {
+    position: fixed;
+    font-size: 3.2rem;
+    top: 15%;
+    left: 50%;
+    z-index: 1;
+    opacity: 0;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+    transition: left 1.5s ease, top 1.5s ease, opacity 1.2s ease;
+    pointer-events: none;
+}
+
+.lua-animada.visivel { opacity: 1; }
+
+/* ==========================================================================
+   5. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+    .dashboard-card { padding: 2rem 1.4rem; }
+    .sol-animado { width: 60px; height: 60px; }
+    .lua-animada { font-size: 2.4rem; }
+}
+
+@media (min-width: 1920px) {
+    .dashboard-card { max-width: 560px; padding: 3.2rem 2.6rem; }
+}

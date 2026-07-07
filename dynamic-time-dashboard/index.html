@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Time Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="dynamic-time-dashboard.css">
+</head>
+<body>
+
+    <!-- Eu crio aqui as camadas decorativas de fundo (estrelas e sol) -->
+    <div id="camada-estrelas" class="camada-estrelas"></div>
+    <div id="sol-animado" class="sol-animado"></div>
+    <div id="lua-animada" class="lua-animada">🌙</div>
+
+    <main class="app-container">
+
+        <div class="dashboard-card">
+
+            <span id="saudacao" class="saudacao">Good morning</span>
+
+            <div class="relogio-bloco">
+                <span id="relogio" class="relogio">00:00:00</span>
+                <span id="data-completa" class="data-completa">Monday, January 1, 2026</span>
+            </div>
+
+            <div class="info-tema">
+                <span id="icone-tema" class="icone-tema">☀️</span>
+                <span id="nome-tema" class="nome-tema">Tarde</span>
+            </div>
+
+            <!-- Modo de demonstração -->
+            <div class="painel-simulacao">
+                <div class="painel-simulacao-header">
+                    <span class="titulo-secao">Simulation Mode</span>
+                    <span id="badge-modo" class="badge-modo">Automatic</span>
+                </div>
+
+                <input type="range" id="slider-hora" class="slider-hora" min="0" max="23" step="1" value="12">
+                <div class="slider-marcas">
+                    <span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span>
+                </div>
+
+                <button id="btn-hora-real" class="btn-secundario">Use Real Time</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="dynamic-time-dashboard.js"></script>
+</body>
+</html>
