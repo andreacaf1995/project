@@ -1,0 +1,360 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS DE COR
+   Eu mantenho a base roxo-neon do portfolio e acrescento tons de
+   "feltro de casino" apenas dentro da mesa de jogo.
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --cor-fundo: #05010d;
+    --cor-fundo-gradiente: radial-gradient(circle at 20% 20%, #150a2b 0%, #05010d 55%), #05010d;
+    --cor-caixa: #0c0717;
+    --cor-caixa-clara: #140a26;
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-apagado: #ffffff50;
+    --cor-roxo-neon: #a445fe;
+    --cor-roxo-claro: #ba70ff;
+    --cor-borda-oficial: rgba(164, 69, 254, 0.25);
+    --cor-borda-suave: rgba(164, 69, 254, 0.1);
+    --cor-sucesso: #00ff66;
+    --cor-erro: #ff3d57;
+    --cor-ouro: #ffc94d;
+    --cor-mesa: radial-gradient(ellipse at 50% 0%, #0f2e1f 0%, #081a12 65%, #05100b 100%);
+}
+
+body {
+    background: var(--cor-fundo-gradiente);
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto-principal);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.escondido { display: none !important; }
+button { font-family: inherit; cursor: pointer; }
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* ==========================================================================
+   2. MENU INICIAL
+   ========================================================================== */
+
+.tela-menu { width: 100%; display: flex; justify-content: center; }
+
+.menu-card {
+    width: 100%; max-width: 560px;
+    position: relative;
+    background-color: var(--cor-caixa);
+    border-radius: 1.2rem;
+    padding: 2.2rem 2.4rem 2rem;
+    background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(var(--cor-caixa), var(--cor-caixa)),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, var(--cor-borda-oficial) 35%, transparent 100%);
+    background-origin: padding-box, padding-box, border-box;
+    background-clip: padding-box, padding-box, border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.logo-jogo { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-bottom: 0.4rem; }
+.logo-icon { font-size: 2.2rem; filter: drop-shadow(0 0 12px var(--cor-borda-oficial)); }
+.logo-jogo h1 { font-size: clamp(1.5rem, 4vw, 1.95rem); font-weight: 800; text-align: center; }
+.destaque { color: var(--cor-ouro); text-shadow: 0 0 18px rgba(255, 201, 77, 0.4); }
+.subtitulo { text-align: center; color: var(--cor-texto-secundario); font-size: 0.85rem; margin-bottom: 1.6rem; }
+
+.bloco-selecao { margin-bottom: 1.4rem; }
+.titulo-secao {
+    font-size: 0.75rem; font-weight: 600; color: var(--cor-roxo-claro);
+    text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.6rem; display: block;
+}
+
+.grelha-niveis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+
+.nivel-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.7rem 0.4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    color: var(--cor-texto-secundario);
+    transition: all 0.25s ease;
+}
+.nivel-card .nivel-numero { font-size: 0.95rem; font-weight: 700; }
+.nivel-card .nivel-info { font-size: 0.56rem; color: var(--cor-texto-apagado); text-align: center; }
+.nivel-card:hover { border-color: var(--cor-borda-oficial); color: var(--cor-texto-principal); }
+.nivel-card.active {
+    color: var(--cor-texto-principal); border-color: var(--cor-ouro);
+    background-color: rgba(255, 201, 77, 0.1); box-shadow: 0 0 16px rgba(255, 201, 77, 0.15);
+}
+
+.btn-principal {
+    width: 100%;
+    background: linear-gradient(135deg, var(--cor-roxo-claro), var(--cor-roxo-neon));
+    border: none; color: #fff; font-weight: 600; font-size: 0.92rem;
+    padding: 0.9rem; border-radius: 0.7rem;
+    box-shadow: 0 8px 24px rgba(164, 69, 254, 0.35);
+    transition: all 0.25s ease; margin-top: 0.4rem;
+}
+.btn-principal:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(164, 69, 254, 0.5); }
+.btn-principal:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-secundario {
+    width: 100%; max-width: 280px;
+    background-color: transparent;
+    border: 1px solid var(--cor-borda-oficial);
+    color: var(--cor-texto-principal);
+    font-weight: 500; font-size: 0.85rem;
+    padding: 0.85rem; border-radius: 0.7rem;
+    transition: all 0.25s ease;
+    margin: 0 auto;
+}
+.btn-secundario:hover { background-color: var(--cor-borda-suave); }
+
+.painel-estatisticas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-top: 1.6rem; }
+
+.stat-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.7rem 0.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+}
+.stat-card-icon { font-size: 1.2rem; }
+.stat-card-valor { font-size: 0.95rem; font-weight: 700; display: block; }
+.stat-card-label { font-size: 0.6rem; color: var(--cor-texto-apagado); }
+
+.btn-som {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    width: 2.4rem; height: 2.4rem; border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.25s ease;
+}
+.btn-som:hover { background-color: var(--cor-borda-suave); }
+
+/* ==========================================================================
+   3. ECRÃ DE JOGO
+   ========================================================================== */
+
+.tela-jogo { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 1.2rem; }
+
+.jogo-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.9rem;
+    padding: 0.9rem 1.2rem;
+    flex-wrap: wrap;
+}
+
+.btn-icon {
+    width: 2.4rem; height: 2.4rem; flex-shrink: 0;
+    border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-principal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transition: all 0.25s ease;
+}
+.btn-icon:hover { background-color: var(--cor-borda-suave); }
+
+.stats-jogo { display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center; }
+.stat-item { display: flex; flex-direction: column; align-items: center; min-width: 64px; }
+.stat-item .stat-label { font-size: 0.6rem; color: var(--cor-texto-apagado); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-item .stat-valor { font-size: 1rem; font-weight: 700; color: var(--cor-ouro); }
+.jogo-controlos { display: flex; gap: 0.6rem; }
+
+/* --- Mesa --- */
+
+.mesa-blackjack {
+    background: var(--cor-mesa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 1.2rem;
+    padding: 1.6rem 1.2rem;
+    display: flex; flex-direction: column; gap: 1.2rem;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+.area-jogador { display: flex; flex-direction: column; gap: 0.6rem; align-items: center; }
+
+.area-cabecalho { display: flex; align-items: center; gap: 0.6rem; }
+.area-titulo { font-size: 0.78rem; font-weight: 600; color: var(--cor-texto-secundario); text-transform: uppercase; letter-spacing: 0.5px; }
+.area-pontuacao {
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--cor-borda-oficial);
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.6rem;
+    font-weight: 700; font-size: 0.85rem;
+    color: var(--cor-ouro);
+}
+
+.fileira-cartas {
+    display: flex; gap: -1rem; min-height: 110px;
+    align-items: center; justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mensagem-jogo {
+    text-align: center;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--cor-texto-principal);
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.6rem;
+    padding: 0.6rem 1rem;
+    min-height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.mensagem-jogo.vitoria { color: var(--cor-sucesso); border-color: var(--cor-sucesso); }
+.mensagem-jogo.derrota { color: var(--cor-erro); border-color: var(--cor-erro); }
+.mensagem-jogo.empate { color: var(--cor-ouro); border-color: var(--cor-ouro); }
+
+/* --- Cartas --- */
+
+.carta-jogo {
+    width: 64px; height: 92px;
+    border-radius: 0.5rem;
+    background-color: #fdfdfd;
+    color: #1a1a1a;
+    position: relative;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    margin-left: -16px;
+    animation: distribuirCarta 0.4s ease;
+    flex-shrink: 0;
+}
+
+.carta-jogo:first-child { margin-left: 0; }
+
+@keyframes distribuirCarta {
+    from { transform: translateY(-30px) scale(0.7); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.carta-jogo .canto {
+    position: absolute;
+    font-size: 0.65rem;
+    line-height: 1;
+    display: flex; flex-direction: column; align-items: center;
+}
+.carta-jogo .canto.topo { top: 6px; left: 6px; }
+.carta-jogo .canto.fundo { bottom: 6px; right: 6px; transform: rotate(180deg); }
+
+.carta-jogo .simbolo-central { font-size: 1.6rem; }
+
+.carta-jogo.vermelha { color: #d6213e; }
+.carta-jogo.preta { color: #1a1a1a; }
+
+.carta-jogo.virada-costas {
+    background: repeating-linear-gradient(135deg, var(--cor-roxo-neon) 0px, var(--cor-roxo-neon) 6px, #1a0f33 6px, #1a0f33 12px);
+    border: 2px solid var(--cor-roxo-claro);
+}
+
+/* --- Painel de Aposta --- */
+
+.painel-aposta {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+}
+
+.chips-container { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+
+.chip {
+    width: 3rem; height: 3rem;
+    border-radius: 50%;
+    border: 2px dashed var(--cor-ouro);
+    background: radial-gradient(circle at 35% 30%, #2a1f0a, #15100a 70%);
+    color: var(--cor-ouro);
+    font-weight: 700; font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+}
+.chip:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(255, 201, 77, 0.25); }
+.chip-allin { font-size: 0.62rem; border-color: var(--cor-erro); color: var(--cor-erro); }
+
+.aposta-atual-bloco {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; font-weight: 600;
+}
+#valor-aposta-atual { color: var(--cor-ouro); }
+
+.btn-limpar-aposta {
+    width: 1.6rem; height: 1.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-secundario);
+    font-size: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+#painel-aposta .btn-principal { max-width: 280px; }
+
+/* --- Controlos de Ronda --- */
+
+.controlos-ronda { display: flex; gap: 0.8rem; justify-content: center; }
+
+.btn-acao {
+    flex: 1; max-width: 200px;
+    padding: 0.85rem; border-radius: 0.7rem;
+    border: none; font-weight: 600; font-size: 0.85rem;
+    transition: all 0.25s ease;
+}
+
+.btn-hit { background: linear-gradient(135deg, #2bd97a, var(--cor-sucesso)); color: #06270f; }
+.btn-stand { background: linear-gradient(135deg, #ff6b81, var(--cor-erro)); color: #2b0710; }
+.btn-acao:hover { transform: translateY(-2px); }
+.btn-acao:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+/* ==========================================================================
+   4. CONFETES
+   ========================================================================== */
+
+.camada-confetes {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 300;
+}
+
+.confete {
+    position: absolute;
+    top: -10px;
+    width: 8px; height: 14px;
+    opacity: 0.9;
+    animation: cairConfete linear forwards;
+}
+
+@keyframes cairConfete {
+    from { transform: translateY(0) rotate(0deg); opacity: 1; }
+    to { transform: translateY(110vh) rotate(540deg); opacity: 0; }
+}
+
+/* ==========================================================================
+   5. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+    .menu-card { padding: 1.8rem 1.4rem; }
+    .carta-jogo { width: 52px; height: 76px; }
+    .carta-jogo .simbolo-central { font-size: 1.2rem; }
+    .stats-jogo { gap: 1rem; }
+    .jogo-header { justify-content: center; }
+    .chip { width: 2.5rem; height: 2.5rem; font-size: 0.66rem; }
+}

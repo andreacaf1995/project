@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Royale</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ====================================================
+             ECRÃ 1: MENU INICIAL
+        ==================================================== -->
+        <section id="tela-menu" class="tela-menu">
+            <div class="menu-card">
+
+                <div class="logo-jogo">
+                    <span class="logo-icon">🃏</span>
+                    <h1>Blackjack <span class="destaque">Royale</span></h1>
+                </div>
+                <p class="subtitulo">Reach 21 and beat the dealer at the casino table.</p>
+
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Level da Mesa</h2>
+                    <div class="grelha-niveis" id="grelha-niveis"></div>
+                </div>
+
+                <button id="btn-comecar" class="btn-principal">Sit at the Table</button>
+
+                <div class="painel-estatisticas">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏆</span>
+                        <div class="stat-card-info">
+                            <span id="stat-vitorias" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Wins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">💰</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-saldo" class="stat-card-valor">1000</span>
+                            <span class="stat-card-label">Best Balance</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🔥</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-sequencia" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Best Streak</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🃏</span>
+                        <div class="stat-card-info">
+                            <span id="stat-blackjacks" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Blackjacks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-som-menu" class="btn-som" aria-label="Turn sound on or off">
+                    <span id="icon-som-menu">🔊</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 2: MESA DE JOGO
+        ==================================================== -->
+        <section id="tela-jogo" class="tela-jogo escondido">
+
+            <header class="jogo-header">
+                <button id="btn-voltar-menu" class="btn-icon" aria-label="Back to menu"><span>←</span></button>
+
+                <div class="stats-jogo">
+                    <div class="stat-item">
+                        <span class="stat-label">Level</span>
+                        <span id="valor-nivel" class="stat-valor">1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Balance</span>
+                        <span id="valor-saldo" class="stat-valor">1000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Streak</span>
+                        <span id="valor-sequencia" class="stat-valor">0</span>
+                    </div>
+                </div>
+
+                <div class="jogo-controlos">
+                    <button id="btn-reiniciar-jogo" class="btn-icon" aria-label="Restart game"><span>⟳</span></button>
+                    <button id="btn-som-jogo" class="btn-icon" aria-label="Turn sound on or off">
+                        <span id="icon-som-jogo">🔊</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="mesa-blackjack">
+
+                <!-- Área do Dealer -->
+                <div class="area-jogador area-dealer">
+                    <div class="area-cabecalho">
+                        <span class="area-titulo">Dealer</span>
+                        <span id="pontuacao-dealer" class="area-pontuacao">0</span>
+                    </div>
+                    <div id="cartas-dealer" class="fileira-cartas"></div>
+                </div>
+
+                <!-- Mensagem central da ronda -->
+                <div id="mensagem-jogo" class="mensagem-jogo">Place your bet to start the round.</div>
+
+                <!-- Área do Jogador -->
+                <div class="area-jogador area-jogador-humano">
+                    <div class="area-cabecalho">
+                        <span class="area-titulo">Your Hand</span>
+                        <span id="pontuacao-jogador" class="area-pontuacao">0</span>
+                    </div>
+                    <div id="cartas-jogador" class="fileira-cartas"></div>
+                </div>
+
+                <!-- Painel de Aposta -->
+                <div id="painel-aposta" class="painel-aposta">
+                    <span class="titulo-secao">Choose your bet</span>
+                    <div class="chips-container">
+                        <button class="chip" data-valor="10">10</button>
+                        <button class="chip" data-valor="25">25</button>
+                        <button class="chip" data-valor="50">50</button>
+                        <button class="chip" data-valor="100">100</button>
+                        <button class="chip chip-allin" data-valor="all">All In</button>
+                    </div>
+                    <div class="aposta-atual-bloco">
+                        <span>Bet: </span><span id="valor-aposta-atual">0</span>
+                        <button id="btn-limpar-aposta" class="btn-limpar-aposta" aria-label="Clear bet">✕</button>
+                    </div>
+                    <button id="btn-confirmar-aposta" class="btn-principal" disabled>Deal Cards</button>
+                </div>
+
+                <!-- Controlos da Ronda -->
+                <div id="controlos-ronda" class="controlos-ronda escondido">
+                    <button id="btn-hit" class="btn-acao btn-hit">Hit</button>
+                    <button id="btn-stand" class="btn-acao btn-stand">Stand</button>
+                </div>
+
+                <button id="btn-nova-partida" class="btn-secundario escondido">New Game</button>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Camada de confetes para a animação de vitória -->
+    <div id="camada-confetes" class="camada-confetes"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
