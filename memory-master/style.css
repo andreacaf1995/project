@@ -1,0 +1,587 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS DE COR
+   Eu reaproveito aqui a mesma paleta roxo-neon do resto do portfolio.
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-fundo: #05010d;
+    --cor-fundo-gradiente: radial-gradient(circle at 20% 20%, #150a2b 0%, #05010d 55%), #05010d;
+    --cor-caixa: #0c0717;
+    --cor-caixa-clara: #140a26;
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-apagado: #ffffff50;
+    --cor-roxo-neon: #a445fe;
+    --cor-roxo-claro: #ba70ff;
+    --cor-borda-oficial: rgba(164, 69, 254, 0.25);
+    --cor-borda-suave: rgba(164, 69, 254, 0.1);
+    --cor-sucesso: #00ff66;
+    --cor-erro: #ff3d57;
+}
+
+body {
+    background: var(--cor-fundo-gradiente);
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto-principal);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.escondido {
+    display: none !important;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* ==========================================================================
+   2. ECRÃ DE MENU
+   ========================================================================== */
+
+.tela-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-card {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    background-color: var(--cor-caixa);
+    border-radius: 1.2rem;
+    padding: 2.2rem 2.4rem 2rem;
+    border: 1px solid transparent;
+    background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(var(--cor-caixa), var(--cor-caixa)),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, var(--cor-borda-oficial) 35%, transparent 100%);
+    background-origin: padding-box, padding-box, border-box;
+    background-clip: padding-box, padding-box, border-box;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.logo-jogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-bottom: 0.4rem;
+}
+
+.logo-icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 0 12px var(--cor-borda-oficial));
+}
+
+.logo-jogo h1 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+    font-weight: 800;
+    text-align: center;
+}
+
+.destaque {
+    color: var(--cor-roxo-neon);
+    text-shadow: 0 0 18px var(--cor-borda-oficial);
+}
+
+.subtitulo {
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    font-size: 0.85rem;
+    margin-bottom: 1.6rem;
+}
+
+.bloco-selecao {
+    margin-bottom: 1.4rem;
+}
+
+.titulo-secao {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--cor-roxo-claro);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.6rem;
+}
+
+/* --- Seleção de Theme --- */
+
+.grelha-temas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+}
+
+.tema-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.9rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.72rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.tema-emoji {
+    font-size: 1.5rem;
+}
+
+.tema-card:hover {
+    border-color: var(--cor-borda-oficial);
+    color: var(--cor-texto-principal);
+}
+
+.tema-card.active {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-roxo-neon);
+    background-color: rgba(164, 69, 254, 0.12);
+    box-shadow: 0 0 16px var(--cor-borda-suave);
+}
+
+/* --- Seleção de Level --- */
+
+.grelha-niveis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+}
+
+.nivel-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.6rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    color: var(--cor-texto-secundario);
+    transition: all 0.25s ease;
+}
+
+.nivel-card .nivel-numero {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.nivel-card .nivel-pares {
+    font-size: 0.6rem;
+    color: var(--cor-texto-apagado);
+}
+
+.nivel-card:hover:not(:disabled) {
+    border-color: var(--cor-borda-oficial);
+    color: var(--cor-texto-principal);
+}
+
+.nivel-card.active {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-roxo-neon);
+    background-color: rgba(164, 69, 254, 0.12);
+    box-shadow: 0 0 16px var(--cor-borda-suave);
+}
+
+.nivel-card:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* --- Botão Principal --- */
+
+.btn-principal {
+    width: 100%;
+    background: linear-gradient(135deg, var(--cor-roxo-claro), var(--cor-roxo-neon));
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.9rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 8px 24px rgba(164, 69, 254, 0.35);
+    transition: all 0.25s ease;
+    margin-top: 0.4rem;
+}
+
+.btn-principal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(164, 69, 254, 0.5);
+}
+
+.btn-secundario {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--cor-borda-oficial);
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.85rem;
+    border-radius: 0.7rem;
+    transition: all 0.25s ease;
+}
+
+.btn-secundario:hover {
+    background-color: var(--cor-borda-suave);
+}
+
+/* --- Painel de Statistics --- */
+
+.painel-estatisticas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-top: 1.6rem;
+}
+
+.stat-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.7rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2rem;
+}
+
+.stat-card-icon {
+    font-size: 1.1rem;
+}
+
+.stat-card-valor {
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.stat-card-label {
+    font-size: 0.56rem;
+    color: var(--cor-texto-apagado);
+    line-height: 1.2;
+}
+
+.btn-som {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.25s ease;
+}
+
+.btn-som:hover {
+    background-color: var(--cor-borda-suave);
+}
+
+/* ==========================================================================
+   3. ECRÃ DE JOGO
+   ========================================================================== */
+
+.tela-jogo {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.jogo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.9rem;
+    padding: 0.9rem 1.2rem;
+    flex-wrap: wrap;
+}
+
+.btn-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex-shrink: 0;
+    border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-principal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.25s ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--cor-borda-suave);
+    box-shadow: 0 0 12px var(--cor-borda-suave);
+}
+
+.stats-jogo {
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 56px;
+}
+
+.stat-item .stat-label {
+    font-size: 0.6rem;
+    color: var(--cor-texto-apagado);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-item .stat-valor {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--cor-roxo-claro);
+}
+
+.jogo-controlos {
+    display: flex;
+    gap: 0.6rem;
+}
+
+/* --- Grelha de Cartas --- */
+
+.grid-cartas {
+    --colunas: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--colunas), 1fr);
+    gap: 0.8rem;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.9rem;
+    padding: 1.2rem;
+}
+
+.carta {
+    aspect-ratio: 3 / 4;
+    perspective: 1000px;
+}
+
+.carta-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.carta.virada .carta-inner {
+    transform: rotateY(180deg);
+}
+
+.carta.correta .carta-inner {
+    cursor: default;
+}
+
+.carta-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.carta-tras {
+    background: linear-gradient(135deg, var(--cor-caixa-clara), #1a0f33);
+    border: 1px solid var(--cor-borda-oficial);
+    font-size: 1.4rem;
+    color: var(--cor-roxo-claro);
+}
+
+.carta-frente {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-oficial);
+    transform: rotateY(180deg);
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+}
+
+.carta.correta .carta-frente,
+.carta.correta .carta-tras {
+    border-color: var(--cor-sucesso);
+    box-shadow: 0 0 16px rgba(0, 255, 102, 0.35);
+}
+
+.carta.erro .carta-frente {
+    border-color: var(--cor-erro);
+    box-shadow: 0 0 16px rgba(255, 61, 87, 0.35);
+}
+
+/* Badge usado no tema "Tecnologia" — sem depender de imagens externas */
+.badge-tech {
+    width: 78%;
+    height: 56%;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: clamp(0.7rem, 2vw, 0.95rem);
+    letter-spacing: 0.3px;
+}
+
+/* ==========================================================================
+   4. MODAL DE VITÓRIA
+   ========================================================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(5, 1, 13, 0.85);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1.2rem;
+}
+
+.modal-vitoria-conteudo {
+    width: 100%;
+    max-width: 380px;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-oficial);
+    border-radius: 1rem;
+    padding: 2rem 1.8rem;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(164, 69, 254, 0.25);
+    animation: aparecerModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes aparecerModal {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.vitoria-icon {
+    font-size: 2.6rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    filter: drop-shadow(0 0 14px var(--cor-borda-oficial));
+}
+
+.modal-vitoria-conteudo h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.vitoria-subtitulo {
+    color: var(--cor-texto-secundario);
+    font-size: 0.78rem;
+    margin-bottom: 1.4rem;
+}
+
+.vitoria-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+}
+
+.vitoria-stat-item {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.vitoria-valor {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cor-roxo-claro);
+}
+
+.vitoria-label {
+    font-size: 0.55rem;
+    color: var(--cor-texto-apagado);
+    margin-top: 0.15rem;
+}
+
+.vitoria-botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* ==========================================================================
+   5. RESPONSIVIDADE
+   Eu ajusto aqui colunas e espaçamentos para ecrãs mais pequenos.
+   ========================================================================== */
+
+@media (max-width: 700px) {
+    .grid-cartas {
+        --colunas: 3 !important;
+        gap: 0.5rem;
+        padding: 0.8rem;
+    }
+
+    .stats-jogo {
+        gap: 1rem;
+    }
+
+    .jogo-header {
+        justify-content: center;
+    }
+
+    .menu-card {
+        padding: 1.8rem 1.4rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .grid-cartas {
+        --colunas: 3 !important;
+    }
+
+    .painel-estatisticas {
+        gap: 0.4rem;
+    }
+
+    .stat-card-label {
+        font-size: 0.5rem;
+    }
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Master | Memory Game</title>
+
+    <!-- Eu uso a mesma fonte do resto do portfolio para manter a identidade visual -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ====================================================
+             ECRÃ 1: MENU INICIAL
+             Eu organizo aqui a escolha de tema, nível e estatísticas.
+        ==================================================== -->
+        <section id="tela-menu" class="tela-menu">
+            <div class="menu-card">
+
+                <div class="logo-jogo">
+                    <span class="logo-icon">🧠</span>
+                    <h1>Memory <span class="destaque">Master</span></h1>
+                </div>
+                <p class="subtitulo">Choose a theme and a level to start playing.</p>
+
+                <!-- Seleção de Theme -->
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Theme</h2>
+                    <div class="grelha-temas" id="grelha-temas">
+                        <button class="tema-card active" data-tema="animais" aria-label="Animals theme">
+                            <span class="tema-emoji">🦁</span>
+                            <span>Animals</span>
+                        </button>
+                        <button class="tema-card" data-tema="bandeiras" aria-label="Flags theme">
+                            <span class="tema-emoji">🌍</span>
+                            <span>Flags</span>
+                        </button>
+                        <button class="tema-card" data-tema="tecnologia" aria-label="Technology theme">
+                            <span class="tema-emoji">💻</span>
+                            <span>Technology</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seleção de Level: eu gero estes botões via JavaScript -->
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Level</h2>
+                    <div class="grelha-niveis" id="grelha-niveis"></div>
+                </div>
+
+                <button id="btn-comecar" class="btn-principal">
+                    Start Game
+                </button>
+
+                <!-- Painel de Statistics guardadas em localStorage -->
+                <div class="painel-estatisticas">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏆</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-pontuacao" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Best Score</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">⏱️</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-tempo" class="stat-card-valor">--:--</span>
+                            <span class="stat-card-label">Best Time</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🎮</span>
+                        <div class="stat-card-info">
+                            <span id="stat-total-jogos" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Games Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-som-menu" class="btn-som" aria-label="Turn sound on or off">
+                    <span id="icon-som-menu">🔊</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 2: JOGO
+             Eu mostro aqui as cartas e as estatísticas em tempo real.
+        ==================================================== -->
+        <section id="tela-jogo" class="tela-jogo escondido">
+
+            <header class="jogo-header">
+                <button id="btn-voltar-menu" class="btn-icon" aria-label="Back to menu">
+                    <span>←</span>
+                </button>
+
+                <div class="stats-jogo">
+                    <div class="stat-item">
+                        <span class="stat-label">Attempts</span>
+                        <span id="valor-tentativas" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Time</span>
+                        <span id="valor-tempo" class="stat-valor">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Score</span>
+                        <span id="valor-pontuacao" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Level</span>
+                        <span id="valor-nivel" class="stat-valor">1</span>
+                    </div>
+                </div>
+
+                <div class="jogo-controlos">
+                    <button id="btn-reiniciar" class="btn-icon" aria-label="Restart level">
+                        <span>⟳</span>
+                    </button>
+                    <button id="btn-som-jogo" class="btn-icon" aria-label="Turn sound on or off">
+                        <span id="icon-som-jogo">🔊</span>
+                    </button>
+                </div>
+            </header>
+
+            <main class="grid-cartas" id="grid-cartas">
+                <!-- Eu gero as cartas dinamicamente aqui via JavaScript -->
+            </main>
+        </section>
+
+        <!-- ====================================================
+             MODAL DE VITÓRIA DE NÍVEL
+        ==================================================== -->
+        <div id="modal-vitoria" class="modal-overlay escondido">
+            <div class="modal-vitoria-conteudo">
+                <span class="vitoria-icon">🏆</span>
+                <h2 id="vitoria-titulo">Level Concluído!</h2>
+                <p id="vitoria-subtitulo" class="vitoria-subtitulo">Great job, keep it up.</p>
+
+                <div class="vitoria-stats">
+                    <div class="vitoria-stat-item">
+                        <span id="vitoria-pontos" class="vitoria-valor">0</span>
+                        <span class="vitoria-label">Points Earned</span>
+                    </div>
+                    <div class="vitoria-stat-item">
+                        <span id="vitoria-tentativas" class="vitoria-valor">0</span>
+                        <span class="vitoria-label">Attempts</span>
+                    </div>
+                    <div class="vitoria-stat-item">
+                        <span id="vitoria-tempo" class="vitoria-valor">00:00</span>
+                        <span class="vitoria-label">Time</span>
+                    </div>
+                </div>
+
+                <div class="vitoria-botoes">
+                    <button id="btn-proximo-nivel" class="btn-principal">Next Level</button>
+                    <button id="btn-vitoria-menu" class="btn-secundario">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
