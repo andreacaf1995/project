@@ -1,0 +1,160 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: rgba(255, 255, 255, 0.75);
+    --cor-vidro: rgba(255, 255, 255, 0.08);
+    --cor-borda-vidro: rgba(255, 255, 255, 0.22);
+    --cor-roxo-neon: #a445fe;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(160deg, #0b1026 0%, #05010d 100%);
+    transition: background 1.5s ease;
+    color: var(--cor-texto-principal);
+    position: relative;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   2. CABEÇALHO
+   ========================================================================== */
+
+.topo-app { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+.logo-jogo { display: flex; align-items: center; gap: 0.6rem; }
+.logo-icon { font-size: 1.5rem; }
+.logo-jogo h1 { font-size: 1.2rem; font-weight: 700; }
+.destaque { color: #d7b3ff; }
+
+.btn-secundario {
+    background-color: var(--cor-vidro);
+    border: 1px solid var(--cor-borda-vidro);
+    color: var(--cor-texto-principal);
+    font-weight: 500; font-size: 0.78rem;
+    padding: 0.7rem 1.1rem; border-radius: 0.6rem;
+    transition: all 0.25s ease;
+}
+.btn-secundario:hover { background-color: rgba(255, 255, 255, 0.16); }
+
+/* ==========================================================================
+   3. CARTÕES GLASSMORPHISM
+   ========================================================================== */
+
+.grelha-principal { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.cartao-vidro {
+    background-color: var(--cor-vidro);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--cor-borda-vidro);
+    border-radius: 1.2rem;
+    padding: 1.6rem;
+}
+
+.cartao-principal { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
+.local-nome { font-size: 0.82rem; color: var(--cor-texto-secundario); }
+.relogio-local { font-size: clamp(2.2rem, 8vw, 3.2rem); font-weight: 800; letter-spacing: 1px; }
+.data-local { font-size: 0.8rem; color: var(--cor-texto-secundario); text-transform: capitalize; }
+
+.painel-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+
+.info-item { display: flex; align-items: center; gap: 0.7rem; }
+.info-icone { font-size: 1.4rem; }
+.info-item div { display: flex; flex-direction: column; }
+.info-label { font-size: 0.6rem; color: var(--cor-texto-secundario); text-transform: uppercase; letter-spacing: 0.4px; }
+.info-valor { font-size: 0.95rem; font-weight: 700; }
+
+/* ==========================================================================
+   4. PAINEL DE SIMULAÇÃO
+   ========================================================================== */
+
+.painel-simulacao-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+.titulo-secao { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--cor-texto-secundario); }
+
+.badge-modo {
+    font-size: 0.62rem; font-weight: 600;
+    padding: 0.2rem 0.6rem; border-radius: 1rem;
+    background-color: rgba(164, 69, 254, 0.25); color: #d7b3ff;
+}
+.badge-modo.manual { background-color: rgba(255, 201, 77, 0.25); color: #ffd873; }
+
+.slider-hora { width: 100%; accent-color: var(--cor-roxo-neon); cursor: pointer; margin-bottom: 0.4rem; }
+.slider-marcas { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--cor-texto-secundario); margin-bottom: 0.9rem; }
+
+/* ==========================================================================
+   5. ELEMENTOS DECORATIVOS DO CÉU
+   ========================================================================== */
+
+.camada-estrelas, .camada-cadentes {
+    position: fixed; inset: 0; z-index: 1;
+    opacity: 0; transition: opacity 1.4s ease; pointer-events: none;
+}
+.camada-estrelas.visivel, .camada-cadentes.visivel { opacity: 1; }
+
+.estrela {
+    position: absolute; width: 2px; height: 2px;
+    background-color: #fff; border-radius: 50%;
+    animation: cintilar 3s ease-in-out infinite;
+}
+@keyframes cintilar { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+.estrela-cadente {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: linear-gradient(90deg, #fff, transparent);
+    border-radius: 50%;
+    animation: cair-cadente 1.6s linear forwards;
+}
+@keyframes cair-cadente {
+    from { transform: translate(0, 0) rotate(45deg); opacity: 1; width: 2px; }
+    to { transform: translate(300px, 300px) rotate(45deg); opacity: 0; width: 90px; }
+}
+
+.corpo-celeste {
+    position: fixed;
+    font-size: 2.6rem;
+    top: 15%; left: 50%;
+    z-index: 1;
+    opacity: 0;
+    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.35));
+    transition: left 1.6s ease, top 1.6s ease, opacity 1.2s ease;
+    pointer-events: none;
+}
+.corpo-celeste.visivel { opacity: 1; }
+
+/* ==========================================================================
+   6. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (min-width: 760px) {
+    .grelha-principal {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "principal principal" "info simulacao";
+    }
+    .cartao-principal { grid-area: principal; }
+    .painel-info { grid-area: info; }
+    .painel-simulacao { grid-area: simulacao; }
+}

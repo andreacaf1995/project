@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="sky-tracker.css">
+</head>
+<body>
+
+    <!-- Camadas decorativas de fundo -->
+    <div id="camada-estrelas" class="camada-estrelas"></div>
+    <div id="camada-cadentes" class="camada-cadentes"></div>
+    <div id="sol-animado" class="corpo-celeste sol">☀️</div>
+    <div id="lua-animada" class="corpo-celeste lua">🌙</div>
+
+    <main class="app-container">
+
+        <header class="topo-app">
+            <div class="logo-jogo">
+                <span class="logo-icon">🔭</span>
+                <h1>Sky <span class="destaque">Tracker</span></h1>
+            </div>
+            <button id="btn-localizar" class="btn-secundario">📍 Use My Location</button>
+        </header>
+
+        <div class="grelha-principal">
+
+            <!-- Painel principal com hora e localização -->
+            <section class="cartao-vidro cartao-principal">
+                <span id="local-nome" class="local-nome">Waiting for location...</span>
+                <span id="relogio-local" class="relogio-local">00:00</span>
+                <span id="data-local" class="data-local">--</span>
+            </section>
+
+            <!-- Painel de informação celeste -->
+            <section class="cartao-vidro painel-info">
+                <div class="info-item"><span class="info-icone">☀️</span><div><span class="info-label">Sunrise</span><span id="info-nascer-sol" class="info-valor">--:--</span></div></div>
+                <div class="info-item"><span class="info-icone">🌇</span><div><span class="info-label">Sunset</span><span id="info-por-sol" class="info-valor">--:--</span></div></div>
+                <div class="info-item"><span class="info-icone">🌙</span><div><span class="info-label">Moon Phase</span><span id="info-fase-lua" class="info-valor">--</span></div></div>
+                <div class="info-item"><span class="info-icone">🌡️</span><div><span class="info-label">Temperature</span><span id="info-temperatura" class="info-valor">--</span></div></div>
+                <div class="info-item"><span class="info-icone">🌤️</span><div><span class="info-label">Estado do Time</span><span id="info-tempo" class="info-valor">--</span></div></div>
+            </section>
+
+            <!-- Modo simulação -->
+            <section class="cartao-vidro painel-simulacao">
+                <div class="painel-simulacao-header">
+                    <span class="titulo-secao">Simulation Mode</span>
+                    <span id="badge-modo" class="badge-modo">Automatic</span>
+                </div>
+                <input type="range" id="slider-hora" class="slider-hora" min="0" max="23" step="1" value="12">
+                <div class="slider-marcas"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span></div>
+                <button id="btn-hora-real" class="btn-secundario">Use Real Time</button>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="sky-tracker.js"></script>
+</body>
+</html>
