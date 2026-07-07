@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Challenge | Hangman Game</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ====================================================
+             ECRÃ 1: MENU INICIAL
+             Eu organizo aqui a escolha de categoria, nível e estatísticas.
+        ==================================================== -->
+        <section id="tela-menu" class="tela-menu">
+            <div class="menu-card">
+
+                <div class="logo-jogo">
+                    <span class="logo-icon">🎯</span>
+                    <h1>Hangman <span class="destaque">Challenge</span></h1>
+                </div>
+                <p class="subtitulo">Guess the word before the gallows is complete.</p>
+
+                <!-- Seleção de Category -->
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Category</h2>
+                    <div class="grelha-categorias" id="grelha-categorias">
+                        <button class="categoria-card active" data-categoria="animais">
+                            <span class="categoria-emoji">🐾</span><span>Animals</span>
+                        </button>
+                        <button class="categoria-card" data-categoria="paises">
+                            <span class="categoria-emoji">🌍</span><span>Countries</span>
+                        </button>
+                        <button class="categoria-card" data-categoria="tecnologia">
+                            <span class="categoria-emoji">💻</span><span>Technology</span>
+                        </button>
+                        <button class="categoria-card" data-categoria="programacao">
+                            <span class="categoria-emoji">⌨️</span><span>Programming</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seleção de Level: eu gero estes botões via JavaScript -->
+                <div class="bloco-selecao">
+                    <h2 class="titulo-secao">Level</h2>
+                    <div class="grelha-niveis" id="grelha-niveis"></div>
+                </div>
+
+                <button id="btn-comecar" class="btn-principal">Start Game</button>
+
+                <!-- Painel de Statistics guardadas em localStorage -->
+                <div class="painel-estatisticas">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏆</span>
+                        <div class="stat-card-info">
+                            <span id="stat-melhor-pontuacao" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Best Score</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">✅</span>
+                        <div class="stat-card-info">
+                            <span id="stat-vitorias" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Wins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">📊</span>
+                        <div class="stat-card-info">
+                            <span id="stat-taxa-sucesso" class="stat-card-valor">0%</span>
+                            <span class="stat-card-label">Success Rate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-ver-estatisticas" class="btn-secundario btn-stats-link">View Full Statistics</button>
+
+                <button id="btn-som-menu" class="btn-som" aria-label="Turn sound on or off">
+                    <span id="icon-som-menu">🔊</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 2: PAINEL DE ESTATÍSTICAS
+        ==================================================== -->
+        <section id="tela-estatisticas" class="tela-estatisticas escondido">
+            <div class="menu-card">
+                <button id="btn-fechar-estatisticas" class="btn-icon btn-fechar-stats" aria-label="Close statistics">✕</button>
+                <h2 class="titulo-painel">Statistics</h2>
+
+                <div class="grelha-stats-completas">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏆</span>
+                        <div class="stat-card-info">
+                            <span id="full-melhor-pontuacao" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Best Score</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">⭐</span>
+                        <div class="stat-card-info">
+                            <span id="full-maior-nivel" class="stat-card-valor">1</span>
+                            <span class="stat-card-label">Highest Level</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">✅</span>
+                        <div class="stat-card-info">
+                            <span id="full-vitorias" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Wins</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">❌</span>
+                        <div class="stat-card-info">
+                            <span id="full-derrotas" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Losses</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">📊</span>
+                        <div class="stat-card-info">
+                            <span id="full-taxa-sucesso" class="stat-card-valor">0%</span>
+                            <span class="stat-card-label">Success Rate</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🔤</span>
+                        <div class="stat-card-info">
+                            <span id="full-palavras-descobertas" class="stat-card-valor">0</span>
+                            <span class="stat-card-label">Words Solved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="titulo-secao titulo-historico">Recent Results</h3>
+                <div id="lista-historico" class="lista-historico"></div>
+            </div>
+        </section>
+
+        <!-- ====================================================
+             ECRÃ 3: JOGO
+        ==================================================== -->
+        <section id="tela-jogo" class="tela-jogo escondido">
+
+            <header class="jogo-header">
+                <button id="btn-voltar-menu" class="btn-icon" aria-label="Back to menu"><span>←</span></button>
+
+                <div class="stats-jogo">
+                    <div class="stat-item">
+                        <span class="stat-label">Category</span>
+                        <span id="valor-categoria" class="stat-valor">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Score</span>
+                        <span id="valor-pontuacao" class="stat-valor">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Level</span>
+                        <span id="valor-nivel" class="stat-valor">1</span>
+                    </div>
+                </div>
+
+                <div class="jogo-controlos">
+                    <button id="btn-novo-jogo" class="btn-icon" aria-label="New game"><span>⟳</span></button>
+                    <button id="btn-som-jogo" class="btn-icon" aria-label="Turn sound on or off">
+                        <span id="icon-som-jogo">🔊</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="zona-jogo">
+
+                <!-- Desenho da forca -->
+                <div class="zona-forca">
+                    <svg id="svg-forca" viewBox="0 0 200 220" class="svg-forca">
+                        <line x1="10" y1="210" x2="120" y2="210" class="parte-forca base" />
+                        <line x1="40" y1="210" x2="40" y2="20" class="parte-forca poste" />
+                        <line x1="40" y1="20" x2="130" y2="20" class="parte-forca topo" />
+                        <line x1="130" y1="20" x2="130" y2="50" class="parte-forca corda" />
+                        <circle cx="130" cy="70" r="20" class="parte-forca parte-jogo" data-parte="1" />
+                        <line x1="130" y1="90" x2="130" y2="150" class="parte-forca parte-jogo" data-parte="2" />
+                        <line x1="130" y1="105" x2="105" y2="130" class="parte-forca parte-jogo" data-parte="3" />
+                        <line x1="130" y1="105" x2="155" y2="130" class="parte-forca parte-jogo" data-parte="4" />
+                        <line x1="130" y1="150" x2="108" y2="190" class="parte-forca parte-jogo" data-parte="5" />
+                        <line x1="130" y1="150" x2="152" y2="190" class="parte-forca parte-jogo" data-parte="6" />
+                    </svg>
+                    <div class="barra-tentativas">
+                        <div id="barra-tentativas-preenchimento" class="barra-tentativas-preenchimento"></div>
+                    </div>
+                    <span id="valor-tentativas" class="valor-tentativas">8 attempts left</span>
+                </div>
+
+                <!-- Word escondida -->
+                <div id="palavra-escondida" class="palavra-escondida"></div>
+
+                <!-- Letras já utilizadas -->
+                <div class="letras-usadas-bloco">
+                    <span class="titulo-secao">Letters Used</span>
+                    <div id="letras-usadas" class="letras-usadas"></div>
+                </div>
+
+                <!-- Teclado virtual -->
+                <div id="teclado-virtual" class="teclado-virtual"></div>
+
+            </div>
+        </section>
+
+        <!-- ====================================================
+             MODAL DE FIM DE RONDA (vitória ou derrota)
+        ==================================================== -->
+        <div id="modal-fim" class="modal-overlay escondido">
+            <div class="modal-fim-conteudo">
+                <span id="fim-icon" class="fim-icon">🏆</span>
+                <h2 id="fim-titulo">You Won!</h2>
+                <p id="fim-subtitulo" class="fim-subtitulo">The word was: ANIMAL</p>
+
+                <div class="fim-stats">
+                    <div class="fim-stat-item">
+                        <span id="fim-pontos" class="fim-valor">0</span>
+                        <span class="fim-label">Points</span>
+                    </div>
+                    <div class="fim-stat-item">
+                        <span id="fim-erros" class="fim-valor">0</span>
+                        <span class="fim-label">Mistakes</span>
+                    </div>
+                    <div class="fim-stat-item">
+                        <span id="fim-tempo" class="fim-valor">00:00</span>
+                        <span class="fim-label">Time</span>
+                    </div>
+                </div>
+
+                <div class="fim-botoes">
+                    <button id="btn-proximo-nivel-forca" class="btn-principal">Next Level</button>
+                    <button id="btn-jogar-novamente" class="btn-secundario">Play Again</button>
+                    <button id="btn-fim-menu" class="btn-secundario">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

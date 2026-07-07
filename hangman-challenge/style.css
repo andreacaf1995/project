@@ -1,0 +1,407 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS DE COR
+   Eu mantenho a mesma identidade visual roxo-neon do resto do portfolio.
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-fundo: #05010d;
+    --cor-fundo-gradiente: radial-gradient(circle at 20% 20%, #150a2b 0%, #05010d 55%), #05010d;
+    --cor-caixa: #0c0717;
+    --cor-caixa-clara: #140a26;
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-apagado: #ffffff50;
+    --cor-roxo-neon: #a445fe;
+    --cor-roxo-claro: #ba70ff;
+    --cor-borda-oficial: rgba(164, 69, 254, 0.25);
+    --cor-borda-suave: rgba(164, 69, 254, 0.1);
+    --cor-sucesso: #00ff66;
+    --cor-erro: #ff3d57;
+}
+
+body {
+    background: var(--cor-fundo-gradiente);
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto-principal);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.escondido { display: none !important; }
+button { font-family: inherit; cursor: pointer; }
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* ==========================================================================
+   2. MENU CARD (partilhado entre menu, estatísticas)
+   ========================================================================== */
+
+.tela-menu, .tela-estatisticas { width: 100%; display: flex; justify-content: center; }
+
+.menu-card {
+    width: 100%;
+    max-width: 580px;
+    position: relative;
+    background-color: var(--cor-caixa);
+    border-radius: 1.2rem;
+    padding: 2.2rem 2.4rem 2rem;
+    background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(var(--cor-caixa), var(--cor-caixa)),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, var(--cor-borda-oficial) 35%, transparent 100%);
+    background-origin: padding-box, padding-box, border-box;
+    background-clip: padding-box, padding-box, border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.logo-jogo { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-bottom: 0.4rem; }
+.logo-icon { font-size: 2.2rem; filter: drop-shadow(0 0 12px var(--cor-borda-oficial)); }
+.logo-jogo h1 { font-size: clamp(1.5rem, 4vw, 1.95rem); font-weight: 800; text-align: center; }
+.destaque { color: var(--cor-roxo-neon); text-shadow: 0 0 18px var(--cor-borda-oficial); }
+.subtitulo { text-align: center; color: var(--cor-texto-secundario); font-size: 0.85rem; margin-bottom: 1.6rem; }
+
+.bloco-selecao { margin-bottom: 1.4rem; }
+.titulo-secao {
+    font-size: 0.75rem; font-weight: 600; color: var(--cor-roxo-claro);
+    text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.6rem; display: block;
+}
+
+/* --- Categorias --- */
+
+.grelha-categorias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+
+.categoria-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.8rem 0.3rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.65rem; font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.categoria-emoji { font-size: 1.3rem; }
+.categoria-card:hover { border-color: var(--cor-borda-oficial); color: var(--cor-texto-principal); }
+.categoria-card.active {
+    color: var(--cor-texto-principal); border-color: var(--cor-roxo-neon);
+    background-color: rgba(164, 69, 254, 0.12); box-shadow: 0 0 16px var(--cor-borda-suave);
+}
+
+/* --- Níveis --- */
+
+.grelha-niveis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+
+.nivel-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.55rem 0.4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+    color: var(--cor-texto-secundario);
+    transition: all 0.25s ease;
+}
+
+.nivel-card .nivel-numero { font-size: 0.92rem; font-weight: 700; }
+.nivel-card .nivel-info { font-size: 0.56rem; color: var(--cor-texto-apagado); }
+.nivel-card:hover:not(:disabled) { border-color: var(--cor-borda-oficial); color: var(--cor-texto-principal); }
+.nivel-card.active {
+    color: var(--cor-texto-principal); border-color: var(--cor-roxo-neon);
+    background-color: rgba(164, 69, 254, 0.12); box-shadow: 0 0 16px var(--cor-borda-suave);
+}
+.nivel-card:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* --- Botões --- */
+
+.btn-principal {
+    width: 100%;
+    background: linear-gradient(135deg, var(--cor-roxo-claro), var(--cor-roxo-neon));
+    border: none; color: #fff; font-weight: 600; font-size: 0.92rem;
+    padding: 0.9rem; border-radius: 0.7rem;
+    box-shadow: 0 8px 24px rgba(164, 69, 254, 0.35);
+    transition: all 0.25s ease; margin-top: 0.4rem;
+}
+.btn-principal:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(164, 69, 254, 0.5); }
+
+.btn-secundario {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--cor-borda-oficial);
+    color: var(--cor-texto-principal);
+    font-weight: 500; font-size: 0.85rem;
+    padding: 0.85rem; border-radius: 0.7rem;
+    transition: all 0.25s ease;
+}
+.btn-secundario:hover { background-color: var(--cor-borda-suave); }
+.btn-stats-link { margin-top: 0.8rem; }
+
+/* --- Painel de Statistics resumido (menu) --- */
+
+.painel-estatisticas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 1.6rem; }
+
+.stat-card {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.7rem;
+    padding: 0.7rem 0.5rem;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.2rem;
+}
+.stat-card-icon { font-size: 1.1rem; }
+.stat-card-valor { font-size: 0.92rem; font-weight: 700; }
+.stat-card-label { font-size: 0.56rem; color: var(--cor-texto-apagado); line-height: 1.2; }
+
+.btn-som {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    width: 2.4rem; height: 2.4rem; border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.25s ease;
+}
+.btn-som:hover { background-color: var(--cor-borda-suave); }
+
+/* ==========================================================================
+   3. PAINEL DE ESTATÍSTICAS COMPLETO
+   ========================================================================== */
+
+.btn-fechar-stats { position: absolute; top: 1.2rem; right: 1.2rem; }
+.titulo-painel { text-align: center; font-size: 1.3rem; margin-bottom: 1.4rem; }
+.grelha-stats-completas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.4rem; }
+.titulo-historico { margin-bottom: 0.7rem; }
+
+.lista-historico { display: flex; flex-direction: column; gap: 0.5rem; max-height: 220px; overflow-y: auto; }
+
+.historico-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.72rem;
+}
+.historico-item.vitoria { border-left: 3px solid var(--cor-sucesso); }
+.historico-item.derrota { border-left: 3px solid var(--cor-erro); }
+.historico-resultado { font-weight: 600; }
+.historico-detalhe { color: var(--cor-texto-apagado); font-size: 0.65rem; }
+
+/* ==========================================================================
+   4. ECRÃ DE JOGO
+   ========================================================================== */
+
+.tela-jogo { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 1.2rem; }
+
+.jogo-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.9rem;
+    padding: 0.9rem 1.2rem;
+    flex-wrap: wrap;
+}
+
+.btn-icon {
+    width: 2.4rem; height: 2.4rem; flex-shrink: 0;
+    border-radius: 0.6rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-principal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transition: all 0.25s ease;
+}
+.btn-icon:hover { background-color: var(--cor-borda-suave); box-shadow: 0 0 12px var(--cor-borda-suave); }
+
+.stats-jogo { display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center; }
+.stat-item { display: flex; flex-direction: column; align-items: center; min-width: 64px; }
+.stat-item .stat-label { font-size: 0.6rem; color: var(--cor-texto-apagado); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-item .stat-valor { font-size: 1rem; font-weight: 700; color: var(--cor-roxo-claro); }
+.jogo-controlos { display: flex; gap: 0.6rem; }
+
+.zona-jogo {
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.9rem;
+    padding: 1.4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.4rem;
+}
+
+/* --- Forca SVG --- */
+
+.zona-forca { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 100%; max-width: 220px; }
+
+.svg-forca { width: 100%; height: auto; }
+
+.parte-forca {
+    fill: none;
+    stroke: var(--cor-texto-apagado);
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.parte-forca.parte-jogo {
+    opacity: 0;
+    stroke: var(--cor-erro);
+    transition: opacity 0.3s ease;
+}
+
+.parte-forca.parte-jogo.mostrar {
+    opacity: 1;
+    animation: surgirParte 0.4s ease;
+}
+
+circle.parte-forca { fill: none; }
+
+@keyframes surgirParte {
+    from { transform: scale(0); transform-origin: center; }
+    to { transform: scale(1); transform-origin: center; }
+}
+
+.barra-tentativas {
+    width: 100%; height: 8px;
+    background-color: var(--cor-borda-suave);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.barra-tentativas-preenchimento {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cor-sucesso), #aaff00);
+    transition: width 0.4s ease, background 0.4s ease;
+}
+.valor-tentativas { font-size: 0.7rem; color: var(--cor-texto-secundario); }
+
+/* --- Word escondida --- */
+
+.palavra-escondida {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+}
+
+.letra-slot {
+    width: 2.2rem; height: 2.6rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 700;
+    border-bottom: 3px solid var(--cor-roxo-neon);
+    text-transform: uppercase;
+}
+
+.letra-slot.revelada {
+    animation: revelarLetra 0.4s ease;
+    color: var(--cor-sucesso);
+    border-color: var(--cor-sucesso);
+}
+
+@keyframes revelarLetra {
+    from { transform: rotateX(90deg); opacity: 0; }
+    to { transform: rotateX(0deg); opacity: 1; }
+}
+
+/* --- Letras usadas --- */
+
+.letras-usadas-bloco { width: 100%; text-align: center; }
+.letras-usadas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; min-height: 1.6rem; }
+
+.letra-usada-chip {
+    font-size: 0.72rem; font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--cor-borda-suave);
+}
+.letra-usada-chip.certa { color: var(--cor-sucesso); border-color: var(--cor-sucesso); }
+.letra-usada-chip.errada { color: var(--cor-erro); border-color: var(--cor-erro); text-decoration: line-through; }
+
+/* --- Teclado virtual --- */
+
+.teclado-virtual {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem;
+    max-width: 560px;
+}
+
+.tecla {
+    width: 2.6rem; height: 2.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-principal);
+    font-weight: 600; font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.tecla:hover:not(:disabled) {
+    background-color: var(--cor-borda-suave);
+    box-shadow: 0 0 12px var(--cor-borda-suave);
+    transform: translateY(-2px);
+}
+
+.tecla:disabled { opacity: 0.3; cursor: not-allowed; }
+.tecla.certa { background-color: rgba(0, 255, 102, 0.15); border-color: var(--cor-sucesso); }
+.tecla.errada { background-color: rgba(255, 61, 87, 0.15); border-color: var(--cor-erro); }
+
+/* ==========================================================================
+   5. MODAL DE FIM DE RONDA
+   ========================================================================== */
+
+.modal-overlay {
+    position: fixed; inset: 0;
+    background-color: rgba(5, 1, 13, 0.85);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; padding: 1.2rem;
+}
+
+.modal-fim-conteudo {
+    width: 100%; max-width: 380px;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-oficial);
+    border-radius: 1rem;
+    padding: 2rem 1.8rem;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(164, 69, 254, 0.25);
+    animation: aparecerModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes aparecerModal {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.fim-icon { font-size: 2.6rem; display: block; margin-bottom: 0.6rem; filter: drop-shadow(0 0 14px var(--cor-borda-oficial)); }
+.modal-fim-conteudo h2 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+.fim-subtitulo { color: var(--cor-texto-secundario); font-size: 0.78rem; margin-bottom: 1.4rem; }
+
+.fim-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.6rem; }
+.fim-stat-item {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.3rem;
+    display: flex; flex-direction: column;
+}
+.fim-valor { font-size: 1rem; font-weight: 700; color: var(--cor-roxo-claro); }
+.fim-label { font-size: 0.55rem; color: var(--cor-texto-apagado); margin-top: 0.15rem; }
+
+.fim-botoes { display: flex; flex-direction: column; gap: 0.6rem; }
+
+/* ==========================================================================
+   6. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+    .menu-card { padding: 1.8rem 1.4rem; }
+    .grelha-categorias { grid-template-columns: repeat(2, 1fr); }
+    .tecla { width: 2.3rem; height: 2.3rem; font-size: 0.78rem; }
+    .letra-slot { width: 1.9rem; height: 2.3rem; font-size: 1.1rem; }
+    .stats-jogo { gap: 1rem; }
+    .jogo-header { justify-content: center; }
+}
