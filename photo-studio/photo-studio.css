@@ -1,0 +1,210 @@
+/* ==========================================================================
+   1. RESET E VARIÁVEIS
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --cor-fundo: #05010d;
+    --cor-caixa: #0c0717;
+    --cor-caixa-clara: #140a26;
+    --cor-texto-principal: #ffffff;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-apagado: #ffffff50;
+    --cor-roxo-neon: #a445fe;
+    --cor-roxo-claro: #ba70ff;
+    --cor-borda-oficial: rgba(164, 69, 254, 0.25);
+    --cor-borda-suave: rgba(164, 69, 254, 0.1);
+}
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto-principal);
+    height: 100vh;
+    overflow: hidden;
+}
+
+button { font-family: inherit; cursor: pointer; }
+.escondido { display: none !important; }
+
+.app-container { height: 100vh; display: flex; flex-direction: column; }
+
+/* ==========================================================================
+   2. CABEÇALHO
+   ========================================================================== */
+
+.topo-app {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 1.4rem;
+    background-color: var(--cor-caixa);
+    border-bottom: 1px solid var(--cor-borda-suave);
+    flex-wrap: wrap; gap: 0.8rem;
+}
+
+.logo-jogo { display: flex; align-items: center; gap: 0.6rem; }
+.logo-icon { font-size: 1.4rem; }
+.logo-jogo h1 { font-size: 1.05rem; font-weight: 700; }
+.destaque { color: var(--cor-roxo-claro); }
+
+.acoes-topo { display: flex; align-items: center; gap: 0.5rem; }
+
+.btn-icon {
+    width: 2.3rem; height: 2.3rem;
+    border-radius: 0.55rem;
+    border: 1px solid var(--cor-borda-oficial);
+    background-color: var(--cor-caixa-clara);
+    color: var(--cor-texto-principal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.25s ease;
+}
+.btn-icon:hover:not(:disabled) { background-color: var(--cor-borda-suave); }
+.btn-icon:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.btn-principal {
+    background: linear-gradient(135deg, var(--cor-roxo-claro), var(--cor-roxo-neon));
+    border: none; color: #fff; font-weight: 600; font-size: 0.8rem;
+    padding: 0.7rem 1.1rem; border-radius: 0.6rem;
+    box-shadow: 0 6px 18px rgba(164, 69, 254, 0.3);
+    transition: all 0.25s ease;
+    display: inline-block;
+}
+.btn-principal:hover:not(:disabled) { transform: translateY(-2px); }
+.btn-principal:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+/* ==========================================================================
+   3. CORPO PRINCIPAL
+   ========================================================================== */
+
+.corpo-app { flex: 1; display: flex; overflow: hidden; }
+
+/* --- Barra Lateral --- */
+
+.barra-ferramentas {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: var(--cor-caixa);
+    border-right: 1px solid var(--cor-borda-suave);
+    padding: 1.2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.bloco-ferramenta { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.titulo-secao {
+    font-size: 0.68rem; font-weight: 600; color: var(--cor-roxo-claro);
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.grelha-filtros, .grelha-presets, .grelha-transformar, .grelha-exportar {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;
+}
+
+.btn-filtro, .btn-preset, .btn-secundario {
+    background-color: var(--cor-caixa-clara);
+    border: 1px solid var(--cor-borda-suave);
+    color: var(--cor-texto-principal);
+    font-size: 0.72rem; font-weight: 500;
+    padding: 0.55rem; border-radius: 0.5rem;
+    transition: all 0.25s ease;
+}
+.btn-filtro:hover, .btn-preset:hover, .btn-secundario:hover { border-color: var(--cor-borda-oficial); background-color: var(--cor-borda-suave); }
+.btn-filtro.active, .btn-preset.active {
+    border-color: var(--cor-roxo-neon); color: var(--cor-roxo-claro);
+    background-color: rgba(164, 69, 254, 0.12);
+}
+
+.grelha-transformar { grid-template-columns: repeat(3, 1fr); }
+.grelha-transformar .btn-icon { width: 100%; }
+
+.controlo-slider { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.3rem; }
+.controlo-slider-label { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--cor-texto-secundario); }
+.controlo-slider input[type="range"] { width: 100%; accent-color: var(--cor-roxo-neon); cursor: pointer; }
+
+/* ==========================================================================
+   4. ÁREA DE EDIÇÃO
+   ========================================================================== */
+
+.area-edicao {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    overflow: auto;
+}
+
+/* --- Zona de Upload --- */
+
+.zona-upload {
+    width: 100%; max-width: 420px;
+    border: 2px dashed var(--cor-borda-oficial);
+    border-radius: 1.2rem;
+    padding: 3rem 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+
+.zona-upload.arrastando { border-color: var(--cor-roxo-neon); background-color: var(--cor-borda-suave); }
+.upload-icon { font-size: 2.4rem; }
+.zona-upload p { font-size: 0.9rem; font-weight: 500; }
+.upload-subtexto { font-size: 0.7rem; color: var(--cor-texto-apagado); }
+.upload-formatos { font-size: 0.65rem; color: var(--cor-texto-apagado); margin-top: 0.4rem; }
+
+/* --- Palco do Canvas --- */
+
+.palco-canvas { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+
+.wrapper-canvas {
+    position: relative;
+    max-width: 100%;
+    max-height: 70vh;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+#canvas-original, #canvas-editado {
+    display: block;
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+#canvas-original { position: absolute; top: 0; left: 0; }
+#canvas-editado { position: relative; }
+
+.slider-comparar {
+    width: 100%; max-width: 500px;
+    accent-color: var(--cor-roxo-neon);
+    cursor: pointer;
+}
+
+/* --- Zoom --- */
+
+.controlo-zoom {
+    position: absolute;
+    bottom: 1.4rem; right: 1.4rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    background-color: var(--cor-caixa);
+    border: 1px solid var(--cor-borda-oficial);
+    border-radius: 0.6rem;
+    padding: 0.4rem 0.6rem;
+}
+#valor-zoom { font-size: 0.72rem; font-weight: 600; min-width: 40px; text-align: center; }
+
+/* ==========================================================================
+   5. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 800px) {
+    .corpo-app { flex-direction: column; overflow: auto; }
+    .barra-ferramentas { width: 100%; border-right: none; border-bottom: 1px solid var(--cor-borda-suave); }
+    .area-edicao { padding: 1rem; }
+    #canvas-original, #canvas-editado { max-height: 50vh; }
+}

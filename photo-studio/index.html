@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Studio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="photo-studio.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ====================================================
+             CABEÇALHO
+        ==================================================== -->
+        <header class="topo-app">
+            <div class="logo-jogo">
+                <span class="logo-icon">🖼️</span>
+                <h1>Photo <span class="destaque">Studio</span></h1>
+            </div>
+
+            <div class="acoes-topo">
+                <button id="btn-comparar" class="btn-icon" title="Compare original vs edited" disabled><span>⇄</span></button>
+                <button id="btn-fullscreen" class="btn-icon" title="Fullscreen" disabled><span>⛶</span></button>
+                <button id="btn-resetar" class="btn-icon" title="Reset edit" disabled><span>⟳</span></button>
+                <button id="btn-guardar" class="btn-principal" disabled>💾 Save Image</button>
+            </div>
+        </header>
+
+        <div class="corpo-app">
+
+            <!-- ====================================================
+                 BARRA LATERAL DE FERRAMENTAS
+            ==================================================== -->
+            <aside class="barra-ferramentas">
+
+                <div class="bloco-ferramenta">
+                    <span class="titulo-secao">Quick Filters</span>
+                    <div class="grelha-filtros">
+                        <button class="btn-filtro" data-filtro="normal">Normal</button>
+                        <button class="btn-filtro" data-filtro="preto-branco">P&B</button>
+                        <button class="btn-filtro" data-filtro="sepia">Sepia</button>
+                        <button class="btn-filtro" data-filtro="vintage">Vintage</button>
+                    </div>
+                </div>
+
+                <div class="bloco-ferramenta">
+                    <span class="titulo-secao">Adjustments</span>
+
+                    <div class="controlo-slider">
+                        <div class="controlo-slider-label"><span>Brightness</span><span id="valor-brilho">100%</span></div>
+                        <input type="range" id="slider-brilho" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="controlo-slider">
+                        <div class="controlo-slider-label"><span>Contrast</span><span id="valor-contraste">100%</span></div>
+                        <input type="range" id="slider-contraste" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="controlo-slider">
+                        <div class="controlo-slider-label"><span>Saturation</span><span id="valor-saturacao">100%</span></div>
+                        <input type="range" id="slider-saturacao" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="controlo-slider">
+                        <div class="controlo-slider-label"><span>Blur</span><span id="valor-desfoque">0px</span></div>
+                        <input type="range" id="slider-desfoque" min="0" max="10" value="0">
+                    </div>
+                </div>
+
+                <div class="bloco-ferramenta">
+                    <span class="titulo-secao">Transform</span>
+                    <div class="grelha-transformar">
+                        <button id="btn-rodar" class="btn-icon" title="Rotate 90°"><span>↻</span></button>
+                        <button id="btn-espelhar-h" class="btn-icon" title="Flip horizontal"><span>⇋</span></button>
+                        <button id="btn-espelhar-v" class="btn-icon" title="Flip vertical"><span>⇵</span></button>
+                    </div>
+                </div>
+
+                <div class="bloco-ferramenta">
+                    <span class="titulo-secao">Presets</span>
+                    <div class="grelha-presets">
+                        <button class="btn-preset" data-preset="instagram">Instagram</button>
+                        <button class="btn-preset" data-preset="cinema">Cinema</button>
+                        <button class="btn-preset" data-preset="vintage-preset">Vintage</button>
+                        <button class="btn-preset" data-preset="dark">Dark</button>
+                    </div>
+                </div>
+
+                <div class="bloco-ferramenta">
+                    <span class="titulo-secao">Export</span>
+                    <div class="grelha-exportar">
+                        <button id="btn-exportar-png" class="btn-secundario">PNG</button>
+                        <button id="btn-exportar-jpg" class="btn-secundario">JPG</button>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- ====================================================
+                 ÁREA DE EDIÇÃO / CANVAS
+            ==================================================== -->
+            <main class="area-edicao">
+
+                <!-- Zona de upload (visível sem imagem) -->
+                <div id="zona-upload" class="zona-upload">
+                    <span class="upload-icon">📤</span>
+                    <p>Drag an image here</p>
+                    <span class="upload-subtexto">or</span>
+                    <label for="input-imagem" class="btn-principal">Upload Image</label>
+                    <input type="file" id="input-imagem" accept="image/png, image/jpeg, image/webp" hidden>
+                    <span class="upload-formatos">JPG · PNG · WEBP</span>
+                </div>
+
+                <!-- Palco do canvas (escondido até carregar imagem) -->
+                <div id="palco-canvas" class="palco-canvas escondido">
+                    <div id="wrapper-canvas" class="wrapper-canvas">
+                        <canvas id="canvas-original"></canvas>
+                        <canvas id="canvas-editado"></canvas>
+                    </div>
+
+                    <!-- Slider de comparação (escondido fora do modo comparar) -->
+                    <input type="range" id="slider-comparar" class="slider-comparar escondido" min="0" max="100" value="50">
+                </div>
+
+                <!-- Controlo de Zoom -->
+                <div id="controlo-zoom" class="controlo-zoom escondido">
+                    <button id="btn-zoom-menos" class="btn-icon" title="Diminuir zoom"><span>−</span></button>
+                    <span id="valor-zoom">100%</span>
+                    <button id="btn-zoom-mais" class="btn-icon" title="Aumentar zoom"><span>+</span></button>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <script src="photo-studio.js"></script>
+</body>
+</html>
