@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Explorer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Eu uso o Leaflet como biblioteca gratuita de mapas, conforme sugerido no briefing -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="geo-explorer.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Cabeçalho flutuante -->
+        <header class="topo-app">
+            <div class="logo-jogo">
+                <span class="logo-icon">🌍</span>
+                <h1>Geo <span class="destaque">Explorer</span></h1>
+            </div>
+            <button id="btn-encontrar" class="btn-principal">📍 Find My Location</button>
+        </header>
+
+        <!-- Mapa -->
+        <div id="mapa" class="mapa"></div>
+
+        <!-- Cartão flutuante de informação -->
+        <aside id="cartao-info" class="cartao-info escondido">
+            <button id="btn-fechar-info" class="btn-fechar" aria-label="Close">✕</button>
+
+            <div class="info-cabecalho">
+                <span id="info-bandeira" class="info-bandeira">🏳️</span>
+                <div>
+                    <h2 id="info-pais">Country</h2>
+                    <span id="info-cidade" class="info-cidade">City</span>
+                </div>
+            </div>
+
+            <div class="info-linhas">
+                <div class="info-linha"><span>Region</span><span id="info-regiao">--</span></div>
+                <div class="info-linha"><span>Coordinates</span><span id="info-coordenadas">--</span></div>
+                <div class="info-linha"><span>Time Zone</span><span id="info-fuso">--</span></div>
+                <div class="info-linha"><span>Local Time</span><span id="info-hora-local">--</span></div>
+                <div class="info-linha"><span>Temperature</span><span id="info-temperatura">--</span></div>
+            </div>
+        </aside>
+
+        <!-- Mensagem de modo visitante (localização recusada) -->
+        <div id="mensagem-visitante" class="mensagem-visitante escondido">
+            <span>📵 Could not get your location.</span>
+        </div>
+
+        <!-- Recent Locations -->
+        <section id="painel-recentes" class="painel-recentes escondido">
+            <div class="recentes-cabecalho">
+                <span class="titulo-secao">Recent Locations</span>
+                <button id="btn-fechar-recentes" class="btn-fechar" aria-label="Close">✕</button>
+            </div>
+            <div id="lista-recentes" class="lista-recentes"></div>
+        </section>
+
+        <button id="btn-abrir-recentes" class="btn-flutuante-recentes" aria-label="View recent locations">🕘</button>
+
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="geo-explorer.js"></script>
+</body>
+</html>
